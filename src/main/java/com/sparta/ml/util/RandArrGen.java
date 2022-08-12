@@ -12,15 +12,4 @@ public class RandArrGen {
         }
         return theArray;
     }
-
-    /*
-    public static int[] getRandomArray(int arrayNumber) {
-        Random randArray = new Random();
-        int[] randomArray = new int[arrayNumber];
-        for (int i = 0; i < randomArray.length; i++) {
-            randomArray[i] = randArray.nextInt(10_000);
-        }
-        return randomArray;
-    }
-     */
 }

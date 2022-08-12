@@ -5,20 +5,15 @@ import com.sparta.ml.start.SortLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/*
- - ```display``` - Classes that deal with printing to the console window.
-
-### Phase 3
-        - Add logging code into the Sort Manager project.
-        - Set up ```log4j``` in the project and add a ```.properties``` file.
-        - Create logs at different levels and fully test the resulting output.
-        - Have output going to a log file created in the resources directory.
-        - Ensure there are meaningful log messages added to the project and that they reflect the needs of the levels for which they are set.
-*/
 public class DisplayManager {
-
+    private static final Logger logger = Logger.getLogger("my logger");
+    private static ConsoleHandler consoleHandler = new ConsoleHandler();
     public static void displaySortChoices(){
+        logger.log(Level.INFO, "Asking user to choose the sorting algorithm");
         System.out.println("Which of the following sorting algorithms do you wish to use? ");
         for (int i = 0; i < getMenuItems().size(); i++) {
             System.out.println(i + 1 + ". " + getMenuItems().get(i));
@@ -34,15 +29,18 @@ public class DisplayManager {
     }
 
     public static void printBeforeSort (Sorter sorter, int[] arrayToSort) {
+        logger.log(Level.INFO, "Printing out the randomly generated numbers");
         System.out.println("\nYour " + SortLoader.RandArrLength + " randomised numbers are:\n" + Arrays.toString(arrayToSort));
     }
 
     public static void printResults(Sorter sorter, int [] arrayToSort) {
         long start = System.nanoTime();
         int [] sortedArray = sorter.sortArray(arrayToSort);
+        logger.log(Level.INFO, "Printing out the chosen sorting algorithm type and the sorted numbers");
         System.out.print("\nYou chose to use " + sorter + " algorithm. ");
         System.out.println("Your sorted numbers are:\n" + Arrays.toString(sortedArray));
         long end = System.nanoTime();
+        logger.log(Level.INFO, "Printing out the time spent in sorting the numbers using the chosen sorting algorithm");
         System.out.println("\nSpan time: " + (end - start) + " nanoseconds");
     }
 }

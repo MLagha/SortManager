@@ -6,10 +6,16 @@ import com.sparta.ml.sorters.Sorter;
 import com.sparta.ml.util.RandArrGen;
 
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SortLoader {
 
-    private final static Scanner scanner = new Scanner(System.in);
+    private static final Logger logger = Logger.getLogger("my logger");
+    private static ConsoleHandler consoleHandler = new ConsoleHandler();
+
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static int RandArrLength;
     public static void start (){
@@ -17,6 +23,7 @@ public class SortLoader {
             DisplayManager.displaySortChoices();
             int choice = scanner.nextInt();
             Sorter sorter = SortFactory.getSorter(choice);
+            logger.log(Level.INFO, "Asking user to insert the number of ints they want to generate");
             System.out.println("\nHow many numbers do you wish to generate?");
             int[] arrayToSort = RandArrGen.getRandomArray(scanner.nextInt());
             RandArrLength = arrayToSort.length;

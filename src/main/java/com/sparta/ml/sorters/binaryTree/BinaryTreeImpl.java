@@ -2,7 +2,15 @@ package com.sparta.ml.sorters.binaryTree;
 
 import com.sparta.ml.exceptions.ChildNotFoundException;
 
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class BinaryTreeImpl implements BinaryTree {
+
+    private static final Logger logger = Logger.getLogger("my logger");
+    private static ConsoleHandler consoleHandler = new ConsoleHandler();
+
     private final Node rootNode;
     private int [] sortArrayAsc;
     private int asc;
@@ -50,6 +58,7 @@ public class BinaryTreeImpl implements BinaryTree {
     }
 
     @Override public int getRightChild(int element) throws ChildNotFoundException {
+        logger.log(Level.INFO, "getting the Right Child");
         Node node = findNode(element);
         if(node.getRightChild() == null) {
             throw new ChildNotFoundException("This node has no right child");
@@ -64,13 +73,15 @@ public class BinaryTreeImpl implements BinaryTree {
     }
 
     public int [] returnArrayAsc(int [] sortedArrayAsc, Node node){
-
+        logger.log(Level.INFO, "Returning Ascending Array");
         if (!node.isLeftChildNull()){
+            logger.log(Level.INFO, "If Statement for if the Left Child is not Null");
             returnArrayAsc(sortedArrayAsc, node.getLeftChild());
         }
         sortedArrayAsc[asc++] = node.getValue();
 
         if (!node.isRightChildNull()){
+            logger.log(Level.INFO, "If Statement for if the Right Child is not Null");
             returnArrayAsc(sortedArrayAsc, node.getRightChild());
         }
 
@@ -85,18 +96,21 @@ public class BinaryTreeImpl implements BinaryTree {
     }
 
     private int[] returnDescendingTree(int[] sortedArray, Node node) {
-
+        logger.log(Level.INFO, "Returning Descending Tree");
         if (!node.isRightChildNull()) {
+            logger.log(Level.INFO, "If Statement for if the Left Child is not Null");
             returnDescendingTree(sortedArray, node.getRightChild());
         }
         sortedArray[asc ++] = node.getValue();
         if (!node.isLeftChildNull()) {
+            logger.log(Level.INFO, "If Statement for if the Right Child is not Null");
             returnDescendingTree(sortedArray, node.getLeftChild());
         }
         return sortedArray;
     }
 
     private void addNodeToTree(Node node, int element){
+        logger.log(Level.INFO, "Adding Node to Tree started");
         if (element <= node.getValue()){
             if (node.isLeftChildNull()) {
                 node.setLeftChild(new Node(element));
