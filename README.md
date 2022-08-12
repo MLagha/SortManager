@@ -3,7 +3,7 @@
 
 Overview:
 
-This project allows the user to generate a randomised array of ints and decides how many numbers they want to generate.
+This project allows the user to generate a randomised array of ints and decides how many numbers they wish to generate.
 The Sort Manager also gives the option of sorting the generated numbers using the following four sorting algorithms:
 1. Bubble Sort
 2. Binary Tree Sort
