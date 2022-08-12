@@ -3,10 +3,14 @@ package com.sparta.ml.sorters.binaryTree;
 import com.sparta.ml.exceptions.ChildNotFoundException;
 
 public class BinaryTreeImpl implements BinaryTree {
-
     private final Node rootNode;
-    private int[] arrayToSort;
-    private int index;
+    private int [] sortArrayAsc;
+    private int asc;
+
+    public BinaryTreeImpl(int elements) {
+        rootNode = new Node(elements);
+        this.sortArrayAsc = sortArrayAsc;
+    }
 
     public BinaryTreeImpl(final int[] array) {
         rootNode = new Node(array[0]);
@@ -16,46 +20,25 @@ public class BinaryTreeImpl implements BinaryTree {
     }
 
     @Override
-    public int getRootElement() {
-        return rootNode.getValue();
-    }
-
-    @Override
-    public void addElementToTree(final int element) {
+    public void addElementToTree(final int element){
         addNodeToTree(rootNode, element);
     }
 
-    ////////////////
     @Override
-    public void addElements(int[] arrayToSort) {
-        int index = 1;
-        addNodesToTree(arrayToSort);
-    }
-    ///////////////
-
-    @Override
-    public int getNumberOfElements() {
-        return numberOfNodes(rootNode);
-    }
-
-    private int numberOfNodes(Node rootNode) {
-        if (rootNode == null)
-            return 0;
-        return 1 + numberOfNodes(rootNode.getLeftChild()) + numberOfNodes(rootNode.getRightChild());
-    }
-
-    @Override public boolean findElement(final int value) {
-        Node node = findNode(value);
-        if(node != null) {
-            try {
-                getLeftChild(value);
-                getRightChild(value);
-            } catch (ChildNotFoundException e) {
-                e.printStackTrace();
-            }
-            return true;
+    public void addElements(int[] elements) {
+        for (int i : elements) {
+            addElementToTree(i);
         }
-        return false;
+    }
+
+    @Override
+    public boolean findElement(int value){
+        Node node = findNode(value);
+        if (node != null){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     @Override public int getLeftChild(int element) throws ChildNotFoundException {
@@ -63,7 +46,7 @@ public class BinaryTreeImpl implements BinaryTree {
         if(node.getLeftChild() == null) {
             throw new ChildNotFoundException("This node has no left child");
         }
-            return node.getLeftChild().getValue();
+        return node.getLeftChild().getValue();
     }
 
     @Override public int getRightChild(int element) throws ChildNotFoundException {
@@ -73,33 +56,55 @@ public class BinaryTreeImpl implements BinaryTree {
         }
         return node.getRightChild().getValue();
     }
-
-    private Node findNode(int element) {
-        Node node = rootNode;
-        while(node != null) {
-            if(element == node.getValue()) {
-                return node;
-            }
-            if(element < node.getValue()) {
-                node = node.getLeftChild();
-            } else {
-                node = node.getRightChild();
-            }
-        }
-        return null;
+    @Override
+    public int[] getSortedTreeAsc() {
+        asc = 0;
+        int [] ArrayAsc = new int[getNumberOfElements()];
+        return returnArrayAsc(ArrayAsc, rootNode);
     }
 
-    private void addNodeToTree(Node node, int element) {
-        if(element == node.getValue()) return;
+    public int [] returnArrayAsc(int [] sortedArrayAsc, Node node){
 
-        if(element < node.getValue()) {
-            if(node.isLeftChildNull()) {
+        if (!node.isLeftChildNull()){
+            returnArrayAsc(sortedArrayAsc, node.getLeftChild());
+        }
+        sortedArrayAsc[asc++] = node.getValue();
+
+        if (!node.isRightChildNull()){
+            returnArrayAsc(sortedArrayAsc, node.getRightChild());
+        }
+
+        return sortedArrayAsc;
+    }
+
+    @Override
+    public int[] getSortedTreeDesc() {
+        int[] sortedArray = new int[getNumberOfElements()];
+        asc = 0;
+        return returnDescendingTree(sortedArray, rootNode);
+    }
+
+    private int[] returnDescendingTree(int[] sortedArray, Node node) {
+
+        if (!node.isRightChildNull()) {
+            returnDescendingTree(sortedArray, node.getRightChild());
+        }
+        sortedArray[asc ++] = node.getValue();
+        if (!node.isLeftChildNull()) {
+            returnDescendingTree(sortedArray, node.getLeftChild());
+        }
+        return sortedArray;
+    }
+
+    private void addNodeToTree(Node node, int element){
+        if (element < node.getValue()){
+            if (node.isLeftChildNull()) {
                 node.setLeftChild(new Node(element));
             } else {
                 addNodeToTree(node.getLeftChild(), element);
             }
-        } else if(element > node.getValue()) {
-            if(node.isRightChildNull()) {
+        } else if (element > node.getValue()){
+            if (node.isRightChildNull()){
                 node.setRightChild(new Node(element));
             } else {
                 addNodeToTree(node.getRightChild(), element);
@@ -107,82 +112,37 @@ public class BinaryTreeImpl implements BinaryTree {
         }
     }
 
-    private void addNodesToTree(int[] arrayToAdd) {
-        int index = 1;
+    private Node findNode(int element){
         Node node = rootNode;
-        for(int i = 1; i < arrayToAdd.length; i++) {
-            NewNodeSet:
-            do {
-                if (arrayToAdd[i] < node.getValue()) {
-                    if (node.isLeftChildNull()) {
-                        node.setLeftChild(new Node(arrayToAdd[i]));
-                        i++; index++; node = rootNode;
-                    } else {
-                        node = node.getLeftChild();
-                        continue NewNodeSet;
-                    }
-                } else if (arrayToAdd[i] > node.getValue()) {
-                    if (node.isRightChildNull()) {
-                        node.setRightChild(new Node(arrayToAdd[i]));
-                        i++; index++; node = rootNode;
-                    } else {
-                        node = node.getRightChild();
-                        continue NewNodeSet;
-                    }
-                } else if(arrayToAdd[i] == node.getValue()) {
-                    if (node.isLeftChildNull()) {
-                        node.setLeftChild(new Node(arrayToAdd[i]));
-                        i++; index++; node = rootNode;
-                    } else {
-                        node = node.getLeftChild();
-                        continue NewNodeSet;
-                    }
-                }
-            } while(index < arrayToAdd.length);
+        while (node != null){
+            if (element == node.getValue()){
+                return node;
+            }
+            if (element < node.getValue()){
+                node = node.getLeftChild();
+            } else if (element > node.getValue()){
+                node = node.getRightChild();
+            }
         }
+        return null;
     }
 
-/*
     @Override
-    public int[] sort(int[] arrayToSort) {
-        rootNode = new Node(arrayToSort[0]);
-        this.arrayToSort = arrayToSort;
-        addElements(arrayToSort);
-        return getSortedTreeAsc();
+    public int getRootElement() {
+        return rootNode.getValue();
     }
-*/
+
     @Override
-    public int[] getSortedTreeAsc() {
-        int[] sortedArrayToFill = new int[arrayToSort.length];
-        return sortTreeAsc(sortedArrayToFill, rootNode);
-    }
-    @Override
-    public int[] getSortedTreeDesc() {
-        int[] sortedArrayToFill = new int[arrayToSort.length];
-        return sortTreeDesc(sortedArrayToFill, rootNode);
+    public int getNumberOfElements() {
+        return numOfNodes(rootNode);
     }
 
+    private int numOfNodes(Node rootNode){
+        if (rootNode == null){
+            return 0;
+        }
 
-    public int[] sortTreeAsc(int[] ascSortedArray, Node node) {
-        if (!node.isLeftChildNull()) {
-            sortTreeAsc(ascSortedArray, node.getLeftChild());
-        }
-        ascSortedArray[index++] = node.getValue();
-        if (!node.isRightChildNull()) {
-            sortTreeAsc(ascSortedArray, node.getRightChild());
-        }
-        return ascSortedArray;
+        return 1 + numOfNodes(rootNode.getLeftChild()) + numOfNodes(rootNode.getRightChild());
     }
 
-    public int[] sortTreeDesc(int[] descSortedArray, Node node) {
-        if (!node.isRightChildNull()) {
-            sortTreeDesc(descSortedArray, node.getRightChild());
-        }
-        descSortedArray[index] = node.getValue();
-        index += 1;
-        if (!node.isLeftChildNull()) {
-            sortTreeDesc(descSortedArray, node.getLeftChild());
-        }
-        return descSortedArray;
-    }
 }

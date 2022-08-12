@@ -10,7 +10,7 @@ public interface BinaryTree {
 
     void addElementToTree(int element);
 
-    void addElements(final int[] elements);
+    void addElements(int[] elements);
 
     boolean findElement(int value) throws ChildNotFoundException;
 

@@ -34,14 +34,14 @@ public class DisplayManager {
     }
 
     public static void printBeforeSort (Sorter sorter, int[] arrayToSort) {
-        System.out.print("\nYou chose to use " + sorter + " algorithm. ");
-        System.out.println("Your " + SortLoader.RandArrLength + " randomised numbers are:\n" + Arrays.toString(arrayToSort));
+        System.out.println("\nYour " + SortLoader.RandArrLength + " randomised numbers are:\n" + Arrays.toString(arrayToSort));
     }
 
     public static void printResults(Sorter sorter, int [] arrayToSort) {
         long start = System.nanoTime();
         int [] sortedArray = sorter.sortArray(arrayToSort);
-        System.out.println("\nSorted numbers:\n" + Arrays.toString(sortedArray));
+        System.out.print("\nYou chose to use " + sorter + " algorithm. ");
+        System.out.println("Your sorted numbers are:\n" + Arrays.toString(sortedArray));
         long end = System.nanoTime();
         System.out.println("\nSpan time: " + (end - start) + " nanoseconds");
     }

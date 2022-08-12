@@ -4,12 +4,6 @@ import com.sparta.ml.sorters.binaryTree.BinaryTree;
 import com.sparta.ml.sorters.binaryTree.BinaryTreeImpl;
 
 public class BinarySorter implements Sorter {
-/*
-    @Override
-    public int[] sortArray(int[] arrays) {
-        return BinaryTreeImpl(arrays);
-    }
-    */
 
     @Override
     public int [] sortArray(int[] arrays) {
