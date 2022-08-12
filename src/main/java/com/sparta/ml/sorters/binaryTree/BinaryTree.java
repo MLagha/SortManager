@@ -8,11 +8,11 @@ public interface BinaryTree {
 
     int getNumberOfElements();
 
-    void addElement(int element);
+    void addElementToTree(int element);
 
     void addElements(final int[] elements);
 
-    boolean findElement(int value);  //throws ChildNotFoundException;
+    boolean findElement(int value) throws ChildNotFoundException;
 
     int getLeftChild(int element) throws ChildNotFoundException;
 

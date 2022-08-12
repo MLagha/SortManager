@@ -4,49 +4,34 @@ import com.sparta.ml.exceptions.ChildNotFoundException;
 
 public class BinaryTreeImpl implements BinaryTree {
 
-    private Node rootNode;
+    private final Node rootNode;
     private int[] arrayToSort;
-    private int counter;
+    private int index;
 
-    /*
-    public BinaryTreeImpl(){
-    }
-     */
-
-    public BinaryTreeImpl(int elements) {
-        rootNode = new Node(elements);
-    }
     public BinaryTreeImpl(final int[] array) {
         rootNode = new Node(array[0]);
         for (int i = 1; i < array.length; i++) {
-            addElement(array[i]);
+            addElementToTree(array[i]);
         }
     }
 
-/*
-    @Override
-    public int[] sort(int[] arrayToSort) {
-        rootNode = new Node(arrayToSort[0]);
-        this.arrayToSort = arrayToSort;
-        addElements(arrayToSort);
-        return getSortedTreeAsc();
-    }
-*/
     @Override
     public int getRootElement() {
         return rootNode.getValue();
     }
 
     @Override
-    public void addElement(final int element) {
+    public void addElementToTree(final int element) {
         addNodeToTree(rootNode, element);
     }
 
+    ////////////////
     @Override
-    public void addElements(final int[] arrayToSort) {
+    public void addElements(int[] arrayToSort) {
         int index = 1;
         addNodesToTree(arrayToSort);
     }
+    ///////////////
 
     @Override
     public int getNumberOfElements() {
@@ -76,7 +61,7 @@ public class BinaryTreeImpl implements BinaryTree {
     @Override public int getLeftChild(int element) throws ChildNotFoundException {
         Node node = findNode(element);
         if(node.getLeftChild() == null) {
-            throw new ChildNotFoundException("This Node has No Left Child");
+            throw new ChildNotFoundException("This node has no left child");
         }
             return node.getLeftChild().getValue();
     }
@@ -84,7 +69,7 @@ public class BinaryTreeImpl implements BinaryTree {
     @Override public int getRightChild(int element) throws ChildNotFoundException {
         Node node = findNode(element);
         if(node.getRightChild() == null) {
-            throw new ChildNotFoundException("This Node has No Right Child");
+            throw new ChildNotFoundException("This node has no right child");
         }
         return node.getRightChild().getValue();
     }
@@ -157,6 +142,15 @@ public class BinaryTreeImpl implements BinaryTree {
         }
     }
 
+/*
+    @Override
+    public int[] sort(int[] arrayToSort) {
+        rootNode = new Node(arrayToSort[0]);
+        this.arrayToSort = arrayToSort;
+        addElements(arrayToSort);
+        return getSortedTreeAsc();
+    }
+*/
     @Override
     public int[] getSortedTreeAsc() {
         int[] sortedArrayToFill = new int[arrayToSort.length];
@@ -173,7 +167,7 @@ public class BinaryTreeImpl implements BinaryTree {
         if (!node.isLeftChildNull()) {
             sortTreeAsc(ascSortedArray, node.getLeftChild());
         }
-        ascSortedArray[counter++] = node.getValue();
+        ascSortedArray[index++] = node.getValue();
         if (!node.isRightChildNull()) {
             sortTreeAsc(ascSortedArray, node.getRightChild());
         }
@@ -184,8 +178,8 @@ public class BinaryTreeImpl implements BinaryTree {
         if (!node.isRightChildNull()) {
             sortTreeDesc(descSortedArray, node.getRightChild());
         }
-        descSortedArray[counter] = node.getValue();
-        counter += 1;
+        descSortedArray[index] = node.getValue();
+        index += 1;
         if (!node.isLeftChildNull()) {
             sortTreeDesc(descSortedArray, node.getLeftChild());
         }

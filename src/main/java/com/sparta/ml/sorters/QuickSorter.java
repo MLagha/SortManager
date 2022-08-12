@@ -31,4 +31,9 @@ public class QuickSorter implements Sorter{
         array[end] = swapTemp;
         return i+1;
     }
+
+    @Override
+    public String toString() {
+        return "Quicksort";
+    }
 }

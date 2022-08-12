@@ -11,13 +11,15 @@ public class SortLoader {
 
     private final static Scanner scanner = new Scanner(System.in);
 
+    public static int RandArrLength;
     public static void start (){
         try {
             DisplayManager.displaySortChoices();
             int choice = scanner.nextInt();
             Sorter sorter = SortFactory.getSorter(choice);
-            System.out.println("Please enter the size of the array you wish to generate: ");
+            System.out.println("\nHow many numbers do you wish to generate?");
             int[] arrayToSort = RandArrGen.getRandomArray(scanner.nextInt());
+            RandArrLength = arrayToSort.length;
             DisplayManager.printBeforeSort(sorter, arrayToSort);
             DisplayManager.printResults(sorter, arrayToSort);
         } catch (SorterLoaderException e) {
