@@ -97,7 +97,7 @@ public class BinaryTreeImpl implements BinaryTree {
     }
 
     private void addNodeToTree(Node node, int element){
-        if (element < node.getValue()){
+        if (element <= node.getValue()){
             if (node.isLeftChildNull()) {
                 node.setLeftChild(new Node(element));
             } else {

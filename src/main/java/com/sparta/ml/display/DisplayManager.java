@@ -45,5 +45,4 @@ public class DisplayManager {
         long end = System.nanoTime();
         System.out.println("\nSpan time: " + (end - start) + " nanoseconds");
     }
-
 }

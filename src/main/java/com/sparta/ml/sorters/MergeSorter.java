@@ -2,6 +2,7 @@ package com.sparta.ml.sorters;
 
 public class MergeSorter implements Sorter{
 
+    @Override
     public int[] sortArray(int[] array) {
         if(array.length <= 1) {
             return array;
