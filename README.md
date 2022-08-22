@@ -21,6 +21,3 @@ Moreover, this project provides details about the time spent sorting the randoml
 3. You will then be asked about how many numbers you wish to generate. You can also type the number through the console.
 
 4. The programme will finally sort your generated numbers and present them to you before and after the sorting operation. You can also see through the console your chosen sorting algorithm and the time spent in sorting your numbers.
-
-in the console with the time taken for t 
-   the sort, It will also display the array before and after the sort.
